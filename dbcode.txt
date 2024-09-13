@@ -1,0 +1,711 @@
+create database pack;
+use pack;
+CREATE TABLE admin (
+    admin_id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL,
+    password VARCHAR(50) NOT NULL
+);
+INSERT INTO admin(username, password) VALUES
+('admin', 'admin123');
+
+CREATE TABLE companies (
+    company_id INT AUTO_INCREMENT PRIMARY KEY,
+    company_name VARCHAR(255) NOT NULL,
+    cost_per_km INT NOT NULL
+);
+
+
+
+ALTER TABLE companies
+ADD COLUMN from_location VARCHAR(255) NOT NULL,
+ADD COLUMN to_location VARCHAR(255) NOT NULL;
+
+ALTER TABLE companies
+ADD COLUMN phone_number VARCHAR(15),
+ADD COLUMN rating DECIMAL(2, 1);
+
+
+CREATE TABLE booking_history (
+    booking_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    from_location VARCHAR(255),
+    to_location VARCHAR(255),
+    company VARCHAR(255),
+    cost INT,
+    booking_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES userdata(id)
+);
+ALTER TABLE booking_history
+ADD COLUMN company_id INT;
+
+ALTER TABLE booking_history
+ADD CONSTRAINT fk_company
+FOREIGN KEY (company_id) REFERENCES companies(company_id);
+
+CREATE TABLE userdata (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL,
+    password VARCHAR(50) NOT NULL,
+    email VARCHAR(100) NOT NULL
+);
+ALTER TABLE userdata 
+ADD COLUMN phone VARCHAR(15),
+ADD COLUMN address TEXT;
+INSERT INTO companies (company_name, cost_per_km, phone_number, rating, from_location, to_location)
+VALUES 
+-- Delhi to Mumbai
+('Agarwal Packers and Movers', 6000, '+91 98765 43210', 4.5, 'Delhi', 'Mumbai'),
+('Gati Movers', 6200, '+91 87654 32109', 4.2, 'Delhi', 'Mumbai'),
+('Safe Express', 6400, '+91 76543 21098', 4.8, 'Delhi', 'Mumbai'),
+('Trans Packers', 6100, '+91 65432 10987', 4.4, 'Delhi', 'Mumbai'),
+('Packers Express', 6300, '+91 54321 09876', 4.6, 'Delhi', 'Mumbai'),
+
+-- Delhi to Bangalore
+('Reliable Movers', 7000, '+91 43210 98765', 4.3, 'Delhi', 'Bangalore'),
+('Quick Shift', 7300, '+91 32109 87654', 4.7, 'Delhi', 'Bangalore'),
+('Speedy Relocations', 7500, '+91 21098 76543', 4.5, 'Delhi', 'Bangalore'),
+('Delhi Movers', 7200, '+91 10987 65432', 4.2, 'Delhi', 'Bangalore'),
+('Urban Packers', 7400, '+91 09876 54321', 4.6, 'Delhi', 'Bangalore'),
+
+-- Delhi to Hyderabad
+('Elite Packers and Movers', 6800, '+91 98765 43210', 4.4, 'Delhi', 'Hyderabad'),
+('Metro Movers', 7000, '+91 87654 32109', 4.3, 'Delhi', 'Hyderabad'),
+('Express Relocation', 7200, '+91 76543 21098', 4.5, 'Delhi', 'Hyderabad'),
+('Swift Packers', 6900, '+91 65432 10987', 4.7, 'Delhi', 'Hyderabad'),
+('Secure Move', 7100, '+91 54321 09876', 4.4, 'Delhi', 'Hyderabad'),
+
+-- Delhi to Chennai
+('Capital Packers', 7200, '+91 56789 01234', 4.4, 'Delhi', 'Chennai'),
+('City Relocations', 7400, '+91 67890 12345', 4.3, 'Delhi', 'Chennai'),
+('National Movers', 7600, '+91 78901 23456', 4.5, 'Delhi', 'Chennai'),
+('Swift Shift', 7300, '+91 89012 34567', 4.7, 'Delhi', 'Chennai'),
+('Express Packers', 7500, '+91 90123 45678', 4.4, 'Delhi', 'Chennai'),
+
+-- Delhi to Delhi
+('Local Packers', 5000, '+91 98765 43210', 4.5, 'Delhi', 'Delhi'),
+('Delhi Movers', 5000, '+91 87654 32109', 4.6, 'Delhi', 'Delhi'),
+('Capital Packers', 5000, '+91 76543 21098', 4.4, 'Delhi', 'Delhi'),
+('Swift Packers', 5000, '+91 65432 10987', 4.5, 'Delhi', 'Delhi'),
+('Urban Packers', 5000, '+91 54321 09876', 4.6, 'Delhi', 'Delhi'),
+
+-- Mumbai to Delhi
+('Agarwal Packers and Movers', 6000, '+91 98765 43210', 4.5, 'Mumbai', 'Delhi'),
+('Gati Movers', 6200, '+91 87654 32109', 4.3, 'Mumbai', 'Delhi'),
+('Safe Express', 6400, '+91 76543 21098', 4.8, 'Mumbai', 'Delhi'),
+('Mumbai Packers', 6100, '+91 65432 10987', 4.6, 'Mumbai', 'Delhi'),
+('Swift Move', 6300, '+91 54321 09876', 4.4, 'Mumbai', 'Delhi'),
+
+-- Mumbai to Bangalore
+('Packers Delight', 6200, '+91 43210 98765', 4.3, 'Mumbai', 'Bangalore'),
+('Trans Packers', 6500, '+91 32109 87654', 4.5, 'Mumbai', 'Bangalore'),
+('Express Movers', 6400, '+91 21098 76543', 4.6, 'Mumbai', 'Bangalore'),
+('Reliable Packers', 6300, '+91 10987 65432', 4.4, 'Mumbai', 'Bangalore'),
+('Urban Move', 6600, '+91 09876 54321', 4.7, 'Mumbai', 'Bangalore'),
+
+-- Mumbai to Hyderabad
+('Elite Movers', 6500, '+91 98765 43210', 4.4, 'Mumbai', 'Hyderabad'),
+('Packers Hub', 6800, '+91 87654 32109', 4.5, 'Mumbai', 'Hyderabad'),
+('Fast Relocations', 7000, '+91 76543 21098', 4.3, 'Mumbai', 'Hyderabad'),
+('Metro Packers', 6900, '+91 65432 10987', 4.6, 'Mumbai', 'Hyderabad'),
+('Secure Packers', 7100, '+91 54321 09876', 4.7, 'Mumbai', 'Hyderabad'),
+
+-- Mumbai to Chennai
+('City Packers', 6600, '+91 56789 01234', 4.4, 'Mumbai', 'Chennai'),
+('Swift Relocations', 6800, '+91 67890 12345', 4.3, 'Mumbai', 'Chennai'),
+('Metro Movers', 7000, '+91 78901 23456', 4.5, 'Mumbai', 'Chennai'),
+('Elite Packers', 6900, '+91 89012 34567', 4.7, 'Mumbai', 'Chennai'),
+('Reliable Packers', 7100, '+91 90123 45678', 4.4, 'Mumbai', 'Chennai'),
+
+-- Mumbai to Mumbai
+('Local Packers', 5000, '+91 98765 43210', 4.5, 'Mumbai', 'Mumbai'),
+('Mumbai Movers', 5000, '+91 87654 32109', 4.6, 'Mumbai', 'Mumbai'),
+('City Packers', 5000, '+91 76543 21098', 4.4, 'Mumbai', 'Mumbai'),
+('Swift Movers', 5000, '+91 65432 10987', 4.5, 'Mumbai', 'Mumbai'),
+('Elite Packers', 5000, '+91 54321 09876', 4.6, 'Mumbai', 'Mumbai'),
+
+-- Bangalore to Delhi
+('Bangalore Movers', 7200, '+91 43210 98765', 4.6, 'Bangalore', 'Delhi'),
+('Quick Packers', 7500, '+91 32109 87654', 4.5, 'Bangalore', 'Delhi'),
+('Speedy Packers', 7800, '+91 21098 76543', 4.4, 'Bangalore', 'Delhi'),
+('Reliable Relocations', 7400, '+91 10987 65432', 4.7, 'Bangalore', 'Delhi'),
+('Urban Packers', 7600, '+91 09876 54321', 4.6, 'Bangalore', 'Delhi'),
+
+-- Bangalore to Mumbai
+('Trans Relocation', 6600, '+91 98765 43210', 4.3, 'Bangalore', 'Mumbai'),
+('Packers Delight', 6800, '+91 87654 32109', 4.4, 'Bangalore', 'Mumbai'),
+('Express Relocations', 7000, '+91 76543 21098', 4.5, 'Bangalore', 'Mumbai'),
+('Elite Packers', 6900, '+91 65432 10987', 4.6, 'Bangalore', 'Mumbai'),
+('Speedy Move', 7100, '+91 54321 09876', 4.7, 'Bangalore', 'Mumbai'),
+
+-- Bangalore to Hyderabad
+('Quick Move', 6500, '+91 43210 98765', 4.4, 'Bangalore', 'Hyderabad'),
+('Reliable Relocations', 6700, '+91 32109 87654', 4.5, 'Bangalore', 'Hyderabad'),
+('Swift Packers', 6900, '+91 21098 76543', 4.6, 'Bangalore', 'Hyderabad'),
+('Elite Movers', 6800, '+91 10987 65432', 4.7, 'Bangalore', 'Hyderabad'),
+('Urban Move', 7000, '+91 09876 54321', 4.4, 'Bangalore', 'Hyderabad'),
+
+-- Bangalore to Chennai
+('City Packers', 6100, '+91 56789 01234', 4.3, 'Bangalore', 'Chennai'),
+('Trans Relocations', 6300, '+91 67890 12345', 4.5, 'Bangalore', 'Chennai'),
+('Elite Packers', 6500, '+91 78901 23456', 4.6, 'Bangalore', 'Chennai'),
+('Packers Delight', 6400, '+91 89012 34567', 4.4, 'Bangalore', 'Chennai'),
+('Speedy Move', 6600, '+91 90123 45678', 4.7, 'Bangalore', 'Chennai'),
+
+-- Bangalore to Bangalore
+('Local Packers', 5000, '+91 98765 43210', 4.5, 'Bangalore', 'Bangalore'),
+('Bangalore Movers', 5000, '+91 87654 32109', 4.6, 'Bangalore', 'Bangalore'),
+('City Packers', 5000, '+91 76543 21098', 4.4, 'Bangalore', 'Bangalore'),
+('Swift Packers', 5000, '+91 65432 10987', 4.5, 'Bangalore', 'Bangalore'),
+('Elite Packers', 5000, '+91 54321 09876', 4.6, 'Bangalore', 'Bangalore'),
+
+-- Hyderabad to Delhi
+('Express Packers', 6800, '+91 98765 43210', 4.3, 'Hyderabad', 'Delhi'),
+('Secure Move', 7100, '+91 87654 32109', 4.4, 'Hyderabad', 'Delhi'),
+('Swift Relocations', 7300, '+91 76543 21098', 4.5, 'Hyderabad', 'Delhi'),
+('Trans Packers', 6900, '+91 65432 10987', 4.6, 'Hyderabad', 'Delhi'),
+('Quick Shift', 7200, '+91 54321 09876', 4.7, 'Hyderabad', 'Delhi'),
+
+-- Hyderabad to Mumbai
+('Packers Delight', 6400, '+91 43210 98765', 4.4, 'Hyderabad', 'Mumbai'),
+('Metro Packers', 6700, '+91 32109 87654', 4.3, 'Hyderabad', 'Mumbai'),
+('Reliable Packers', 6900, '+91 21098 76543', 4.5, 'Hyderabad', 'Mumbai'),
+('Quick Move', 6600, '+91 10987 65432', 4.6, 'Hyderabad', 'Mumbai'),
+('Speedy Shift', 7000, '+91 09876 54321', 4.7, 'Hyderabad', 'Mumbai'),
+
+-- Hyderabad to Bangalore
+('Elite Relocations', 6300, '+91 98765 43210', 4.3, 'Hyderabad', 'Bangalore'),
+('City Packers', 6500, '+91 87654 32109', 4.4, 'Hyderabad', 'Bangalore'),
+('Quick Shift', 6700, '+91 76543 21098', 4.5, 'Hyderabad', 'Bangalore'),
+('Express Movers', 6400, '+91 65432 10987', 4.6, 'Hyderabad', 'Bangalore'),
+('Trans Packers', 6600, '+91 54321 09876', 4.7, 'Hyderabad', 'Bangalore'),
+
+-- Hyderabad to Chennai
+('Swift Relocations', 6000, '+91 56789 01234', 4.3, 'Hyderabad', 'Chennai'),
+('Reliable Move', 6200, '+91 67890 12345', 4.4, 'Hyderabad', 'Chennai'),
+('City Packers', 6400, '+91 78901 23456', 4.5, 'Hyderabad', 'Chennai'),
+('Elite Packers', 6100, '+91 89012 34567', 4.6, 'Hyderabad', 'Chennai'),
+('Secure Move', 6600, '+91 90123 45678', 4.7, 'Hyderabad', 'Chennai'),
+
+-- Hyderabad to Hyderabad
+('Local Packers', 5000, '+91 98765 43210', 4.5, 'Hyderabad', 'Hyderabad'),
+('City Packers', 5000, '+91 87654 32109', 4.6, 'Hyderabad', 'Hyderabad'),
+('Swift Packers', 5000, '+91 76543 21098', 4.4, 'Hyderabad', 'Hyderabad'),
+('Elite Packers', 5000, '+91 65432 10987', 4.5, 'Hyderabad', 'Hyderabad'),
+('Reliable Packers', 5000, '+91 54321 09876', 4.6, 'Hyderabad', 'Hyderabad'),
+
+-- Chennai to Delhi
+('Quick Shift', 6800, '+91 43210 98765', 4.3, 'Chennai', 'Delhi'),
+('Speedy Packers', 7100, '+91 32109 87654', 4.4, 'Chennai', 'Delhi'),
+('Trans Relocations', 7400, '+91 21098 76543', 4.5, 'Chennai', 'Delhi'),
+('Elite Packers', 6900, '+91 10987 65432', 4.6, 'Chennai', 'Delhi'),
+('City Packers', 7200, '+91 09876 54321', 4.7, 'Chennai', 'Delhi'),
+
+-- Chennai to Mumbai
+('Reliable Movers', 6500, '+91 98765 43210', 4.4, 'Chennai', 'Mumbai'),
+('Quick Move', 6700, '+91 87654 32109', 4.3, 'Chennai', 'Mumbai'),
+('Elite Packers', 7000, '+91 76543 21098', 4.5, 'Chennai', 'Mumbai'),
+('Metro Movers', 6600, '+91 65432 10987', 4.6, 'Chennai', 'Mumbai'),
+('Speedy Packers', 6800, '+91 54321 09876', 4.7, 'Chennai', 'Mumbai'),
+
+-- Chennai to Bangalore
+('Swift Relocations', 6100, '+91 43210 98765', 4.3, 'Chennai', 'Bangalore'),
+('Reliable Packers', 6300, '+91 32109 87654', 4.4, 'Chennai', 'Bangalore'),
+('City Packers', 6500, '+91 21098 76543', 4.5, 'Chennai', 'Bangalore'),
+('Express Movers', 6200, '+91 10987 65432', 4.6, 'Chennai', 'Bangalore'),
+('Elite Packers', 6600, '+91 09876 54321', 4.7, 'Chennai', 'Bangalore'),
+
+-- Chennai to Hyderabad
+('Packers Delight', 6300, '+91 56789 01234', 4.3, 'Chennai', 'Hyderabad'),
+('Quick Shift', 6500, '+91 67890 12345', 4.4, 'Chennai', 'Hyderabad'),
+('Reliable Move', 6700, '+91 78901 23456', 4.5, 'Chennai', 'Hyderabad'),
+('Elite Packers', 6400, '+91 89012 34567', 4.6, 'Chennai', 'Hyderabad'),
+('City Packers', 6600, '+91 90123 45678', 4.7, 'Chennai', 'Hyderabad'),
+
+-- Chennai to Chennai
+('Local Packers', 5000, '+91 98765 43210', 4.5, 'Chennai', 'Chennai'),
+('Chennai Movers', 5000, '+91 87654 32109', 4.6, 'Chennai', 'Chennai'),
+('City Packers', 5000, '+91 76543 21098', 4.4, 'Chennai', 'Chennai'),
+('Swift Packers', 5000, '+91 65432 10987', 4.5, 'Chennai', 'Chennai'),
+('Elite Packers', 5000, '+91 54321 09876', 4.6, 'Chennai', 'Chennai');
+INSERT INTO companies (company_name, cost_per_km, phone_number, rating, from_location, to_location)
+VALUES 
+-- Vijayawada to other cities
+('Andhra Packers', 3000, '+91 99887 66554', 4.5, 'Vijayawada', 'Visakhapatnam'),
+('Express Movers', 3200, '+91 88998 77665', 4.6, 'Vijayawada', 'Visakhapatnam'),
+('Reliable Packers', 3100, '+91 77987 66554', 4.4, 'Vijayawada', 'Visakhapatnam'),
+('Swift Packers', 3300, '+91 66778 55443', 4.7, 'Vijayawada', 'Visakhapatnam'),
+('Secure Movers', 3400, '+91 55667 44332', 4.3, 'Vijayawada', 'Visakhapatnam'),
+
+('Andhra Packers', 2500, '+91 99887 66554', 4.5, 'Vijayawada', 'Tirupati'),
+('Express Movers', 2700, '+91 88998 77665', 4.6, 'Vijayawada', 'Tirupati'),
+('Reliable Packers', 2600, '+91 77987 66554', 4.4, 'Vijayawada', 'Tirupati'),
+('Swift Packers', 2800, '+91 66778 55443', 4.7, 'Vijayawada', 'Tirupati'),
+('Secure Movers', 2900, '+91 55667 44332', 4.3, 'Vijayawada', 'Tirupati'),
+
+('Andhra Packers', 2000, '+91 99887 66554', 4.5, 'Vijayawada', 'Guntur'),
+('Express Movers', 2200, '+91 88998 77665', 4.6, 'Vijayawada', 'Guntur'),
+('Reliable Packers', 2100, '+91 77987 66554', 4.4, 'Vijayawada', 'Guntur'),
+('Swift Packers', 2300, '+91 66778 55443', 4.7, 'Vijayawada', 'Guntur'),
+('Secure Movers', 2400, '+91 55667 44332', 4.3, 'Vijayawada', 'Guntur'),
+
+('Andhra Packers', 2500, '+91 99887 66554', 4.5, 'Vijayawada', 'Nellore'),
+('Express Movers', 2700, '+91 88998 77665', 4.6, 'Vijayawada', 'Nellore'),
+('Reliable Packers', 2600, '+91 77987 66554', 4.4, 'Vijayawada', 'Nellore'),
+('Swift Packers', 2800, '+91 66778 55443', 4.7, 'Vijayawada', 'Nellore'),
+('Secure Movers', 2900, '+91 55667 44332', 4.3, 'Vijayawada', 'Nellore'),
+
+-- Visakhapatnam to other cities
+('Vizag Packers', 3100, '+91 11223 44556', 4.5, 'Visakhapatnam', 'Vijayawada'),
+('Safe Movers', 3300, '+91 22334 55667', 4.6, 'Visakhapatnam', 'Vijayawada'),
+('Quick Packers', 3200, '+91 33445 66778', 4.4, 'Visakhapatnam', 'Vijayawada'),
+('Express Relocations', 3400, '+91 44556 77889', 4.7, 'Visakhapatnam', 'Vijayawada'),
+('Swift Shifters', 3500, '+91 55667 88990', 4.3, 'Visakhapatnam', 'Vijayawada'),
+
+('Vizag Packers', 2700, '+91 11223 44556', 4.5, 'Visakhapatnam', 'Tirupati'),
+('Safe Movers', 2900, '+91 22334 55667', 4.6, 'Visakhapatnam', 'Tirupati'),
+('Quick Packers', 2800, '+91 33445 66778', 4.4, 'Visakhapatnam', 'Tirupati'),
+('Express Relocations', 3000, '+91 44556 77889', 4.7, 'Visakhapatnam', 'Tirupati'),
+('Swift Shifters', 3100, '+91 55667 88990', 4.3, 'Visakhapatnam', 'Tirupati'),
+
+('Vizag Packers', 2200, '+91 11223 44556', 4.5, 'Visakhapatnam', 'Guntur'),
+('Safe Movers', 2400, '+91 22334 55667', 4.6, 'Visakhapatnam', 'Guntur'),
+('Quick Packers', 2300, '+91 33445 66778', 4.4, 'Visakhapatnam', 'Guntur'),
+('Express Relocations', 2500, '+91 44556 77889', 4.7, 'Visakhapatnam', 'Guntur'),
+('Swift Shifters', 2600, '+91 55667 88990', 4.3, 'Visakhapatnam', 'Guntur'),
+
+('Vizag Packers', 2700, '+91 11223 44556', 4.5, 'Visakhapatnam', 'Nellore'),
+('Safe Movers', 2900, '+91 22334 55667', 4.6, 'Visakhapatnam', 'Nellore'),
+('Quick Packers', 2800, '+91 33445 66778', 4.4, 'Visakhapatnam', 'Nellore'),
+('Express Relocations', 3000, '+91 44556 77889', 4.7, 'Visakhapatnam', 'Nellore'),
+('Swift Shifters', 3100, '+91 55667 88990', 4.3, 'Visakhapatnam', 'Nellore'),
+
+-- Tirupati to other cities
+('Tirupati Packers', 3000, '+91 11223 33445', 4.5, 'Tirupati', 'Vijayawada'),
+('Safe Shifters', 3200, '+91 22334 44556', 4.6, 'Tirupati', 'Vijayawada'),
+('Quick Movers', 3100, '+91 33445 55667', 4.4, 'Tirupati', 'Vijayawada'),
+('Express Packers', 3300, '+91 44556 66778', 4.7, 'Tirupati', 'Vijayawada'),
+('Swift Packers', 3400, '+91 55667 77889', 4.3, 'Tirupati', 'Vijayawada'),
+
+('Tirupati Packers', 2700, '+91 11223 33445', 4.5, 'Tirupati', 'Visakhapatnam'),
+('Safe Shifters', 2900, '+91 22334 44556', 4.6, 'Tirupati', 'Visakhapatnam'),
+('Quick Movers', 2800, '+91 33445 55667', 4.4, 'Tirupati', 'Visakhapatnam'),
+('Express Packers', 3000, '+91 44556 66778', 4.7, 'Tirupati', 'Visakhapatnam'),
+('Swift Packers', 3100, '+91 55667 77889', 4.3, 'Tirupati', 'Visakhapatnam'),
+
+('Tirupati Packers', 2200, '+91 11223 33445', 4.5, 'Tirupati', 'Guntur'),
+('Safe Shifters', 2400, '+91 22334 44556', 4.6, 'Tirupati', 'Guntur'),
+('Quick Movers', 2300, '+91 33445 55667', 4.4, 'Tirupati', 'Guntur'),
+('Express Packers', 2500, '+91 44556 66778', 4.7, 'Tirupati', 'Guntur'),
+('Swift Packers', 2600, '+91 55667 77889', 4.3, 'Tirupati', 'Guntur'),
+
+('Tirupati Packers', 2700, '+91 11223 33445', 4.5, 'Tirupati', 'Nellore'),
+('Safe Shifters', 2900, '+91 22334 44556', 4.6, 'Tirupati', 'Nellore'),
+('Quick Movers', 2800, '+91 33445 55667', 4.4, 'Tirupati', 'Nellore'),
+('Express Packers', 3000, '+91 44556 66778', 4.7, 'Tirupati', 'Nellore'),
+('Swift Packers', 3100, '+91 55667 77889', 4.3, 'Tirupati', 'Nellore'),
+
+-- Guntur to other cities
+('Guntur Packers', 2800, '+91 22334 44556', 4.4, 'Guntur', 'Vijayawada'),
+('Safe Movers', 3000, '+91 33445 55667', 4.5, 'Guntur', 'Vijayawada'),
+('Quick Packers', 2900, '+91 44556 66778', 4.6, 'Guntur', 'Vijayawada'),
+('Express Relocations', 3100, '+91 55667 77889', 4.7, 'Guntur', 'Vijayawada'),
+('Swift Shifters', 3200, '+91 66778 88990', 4.3, 'Guntur', 'Vijayawada'),
+
+('Guntur Packers', 2500, '+91 22334 44556', 4.4, 'Guntur', 'Visakhapatnam'),
+('Safe Movers', 2700, '+91 33445 55667', 4.5, 'Guntur', 'Visakhapatnam'),
+('Quick Packers', 2600, '+91 44556 66778', 4.6, 'Guntur', 'Visakhapatnam'),
+('Express Relocations', 2800, '+91 55667 77889', 4.7, 'Guntur', 'Visakhapatnam'),
+('Swift Shifters', 2900, '+91 66778 88990', 4.3, 'Guntur', 'Visakhapatnam'),
+
+('Guntur Packers', 2000, '+91 22334 44556', 4.4, 'Guntur', 'Tirupati'),
+('Safe Movers', 2200, '+91 33445 55667', 4.5, 'Guntur', 'Tirupati'),
+('Quick Packers', 2100, '+91 44556 66778', 4.6, 'Guntur', 'Tirupati'),
+('Express Relocations', 2300, '+91 55667 77889', 4.7, 'Guntur', 'Tirupati'),
+('Swift Shifters', 2400, '+91 66778 88990', 4.3, 'Guntur', 'Tirupati'),
+
+('Guntur Packers', 2500, '+91 22334 44556', 4.4, 'Guntur', 'Nellore'),
+('Safe Movers', 2700, '+91 33445 55667', 4.5, 'Guntur', 'Nellore'),
+('Quick Packers', 2600, '+91 44556 66778', 4.6, 'Guntur', 'Nellore'),
+('Express Relocations', 2800, '+91 55667 77889', 4.7, 'Guntur', 'Nellore'),
+('Swift Shifters', 2900, '+91 66778 88990', 4.3, 'Guntur', 'Nellore'),
+
+-- Nellore to other cities
+('Nellore Packers', 2700, '+91 33445 55667', 4.4, 'Nellore', 'Vijayawada'),
+('Safe Shifters', 2900, '+91 44556 66778', 4.5, 'Nellore', 'Vijayawada'),
+('Quick Movers', 2800, '+91 55667 77889', 4.6, 'Nellore', 'Vijayawada'),
+('Express Packers', 3000, '+91 66778 88990', 4.7, 'Nellore', 'Vijayawada'),
+('Swift Packers', 3100, '+91 77889 99001', 4.3, 'Nellore', 'Vijayawada'),
+
+('Nellore Packers', 2400, '+91 33445 55667', 4.4, 'Nellore', 'Visakhapatnam'),
+('Safe Shifters', 2600, '+91 44556 66778', 4.5, 'Nellore', 'Visakhapatnam'),
+('Quick Movers', 2500, '+91 55667 77889', 4.6, 'Nellore', 'Visakhapatnam'),
+('Express Packers', 2700, '+91 66778 88990', 4.7, 'Nellore', 'Visakhapatnam'),
+('Swift Packers', 2800, '+91 77889 99001', 4.3, 'Nellore', 'Visakhapatnam'),
+
+('Nellore Packers', 1900, '+91 33445 55667', 4.4, 'Nellore', 'Tirupati'),
+('Safe Shifters', 2100, '+91 44556 66778', 4.5, 'Nellore', 'Tirupati'),
+('Quick Movers', 2000, '+91 55667 77889', 4.6, 'Nellore', 'Tirupati'),
+('Express Packers', 2200, '+91 66778 88990', 4.7, 'Nellore', 'Tirupati'),
+('Swift Packers', 2300, '+91 77889 99001', 4.3, 'Nellore', 'Tirupati'),
+
+('Nellore Packers', 2400, '+91 33445 55667', 4.4, 'Nellore', 'Guntur'),
+('Safe Shifters', 2600, '+91 44556 66778', 4.5, 'Nellore', 'Guntur'),
+('Quick Movers', 2500, '+91 55667 77889', 4.6, 'Nellore', 'Guntur'),
+('Express Packers', 2700, '+91 66778 88990', 4.7, 'Nellore', 'Guntur'),
+('Swift Packers', 2800, '+91 77889 99001', 4.3, 'Nellore', 'Guntur');
+INSERT INTO companies (company_name, cost_per_km, phone_number, rating, from_location, to_location)
+VALUES 
+-- From Andhra Pradesh to Hyderabad
+('Andhra Packers', 4000, '+91 99887 66554', 4.5, 'Vijayawada', 'Hyderabad'),
+('Express Movers', 4200, '+91 88998 77665', 4.6, 'Vijayawada', 'Hyderabad'),
+('Reliable Packers', 4100, '+91 77987 66554', 4.4, 'Vijayawada', 'Hyderabad'),
+('Swift Packers', 4300, '+91 66778 55443', 4.7, 'Vijayawada', 'Hyderabad'),
+('Secure Movers', 4400, '+91 55667 44332', 4.3, 'Vijayawada', 'Hyderabad'),
+
+('Andhra Packers', 4500, '+91 99887 66554', 4.5, 'Visakhapatnam', 'Hyderabad'),
+('Express Movers', 4700, '+91 88998 77665', 4.6, 'Visakhapatnam', 'Hyderabad'),
+('Reliable Packers', 4600, '+91 77987 66554', 4.4, 'Visakhapatnam', 'Hyderabad'),
+('Swift Packers', 4800, '+91 66778 55443', 4.7, 'Visakhapatnam', 'Hyderabad'),
+('Secure Movers', 4900, '+91 55667 44332', 4.3, 'Visakhapatnam', 'Hyderabad'),
+
+('Andhra Packers', 4200, '+91 99887 66554', 4.5, 'Tirupati', 'Hyderabad'),
+('Express Movers', 4400, '+91 88998 77665', 4.6, 'Tirupati', 'Hyderabad'),
+('Reliable Packers', 4300, '+91 77987 66554', 4.4, 'Tirupati', 'Hyderabad'),
+('Swift Packers', 4500, '+91 66778 55443', 4.7, 'Tirupati', 'Hyderabad'),
+('Secure Movers', 4600, '+91 55667 44332', 4.3, 'Tirupati', 'Hyderabad'),
+
+('Andhra Packers', 3700, '+91 99887 66554', 4.5, 'Guntur', 'Hyderabad'),
+('Express Movers', 3900, '+91 88998 77665', 4.6, 'Guntur', 'Hyderabad'),
+('Reliable Packers', 3800, '+91 77987 66554', 4.4, 'Guntur', 'Hyderabad'),
+('Swift Packers', 4000, '+91 66778 55443', 4.7, 'Guntur', 'Hyderabad'),
+('Secure Movers', 4100, '+91 55667 44332', 4.3, 'Guntur', 'Hyderabad'),
+
+('Andhra Packers', 4200, '+91 99887 66554', 4.5, 'Nellore', 'Hyderabad'),
+('Express Movers', 4400, '+91 88998 77665', 4.6, 'Nellore', 'Hyderabad'),
+('Reliable Packers', 4300, '+91 77987 66554', 4.4, 'Nellore', 'Hyderabad'),
+('Swift Packers', 4500, '+91 66778 55443', 4.7, 'Nellore', 'Hyderabad'),
+('Secure Movers', 4600, '+91 55667 44332', 4.3, 'Nellore', 'Hyderabad'),
+
+-- From Andhra Pradesh to Chennai
+('Andhra Packers', 4500, '+91 99887 66554', 4.5, 'Vijayawada', 'Chennai'),
+('Express Movers', 4700, '+91 88998 77665', 4.6, 'Vijayawada', 'Chennai'),
+('Reliable Packers', 4600, '+91 77987 66554', 4.4, 'Vijayawada', 'Chennai'),
+('Swift Packers', 4800, '+91 66778 55443', 4.7, 'Vijayawada', 'Chennai'),
+('Secure Movers', 4900, '+91 55667 44332', 4.3, 'Vijayawada', 'Chennai'),
+
+('Andhra Packers', 5000, '+91 99887 66554', 4.5, 'Visakhapatnam', 'Chennai'),
+('Express Movers', 5200, '+91 88998 77665', 4.6, 'Visakhapatnam', 'Chennai'),
+('Reliable Packers', 5100, '+91 77987 66554', 4.4, 'Visakhapatnam', 'Chennai'),
+('Swift Packers', 5300, '+91 66778 55443', 4.7, 'Visakhapatnam', 'Chennai'),
+('Secure Movers', 5400, '+91 55667 44332', 4.3, 'Visakhapatnam', 'Chennai'),
+
+('Andhra Packers', 4700, '+91 99887 66554', 4.5, 'Tirupati', 'Chennai'),
+('Express Movers', 4900, '+91 88998 77665', 4.6, 'Tirupati', 'Chennai'),
+('Reliable Packers', 4800, '+91 77987 66554', 4.4, 'Tirupati', 'Chennai'),
+('Swift Packers', 5000, '+91 66778 55443', 4.7, 'Tirupati', 'Chennai'),
+('Secure Movers', 5100, '+91 55667 44332', 4.3, 'Tirupati', 'Chennai'),
+
+('Andhra Packers', 4200, '+91 99887 66554', 4.5, 'Guntur', 'Chennai'),
+('Express Movers', 4400, '+91 88998 77665', 4.6, 'Guntur', 'Chennai'),
+('Reliable Packers', 4300, '+91 77987 66554', 4.4, 'Guntur', 'Chennai'),
+('Swift Packers', 4500, '+91 66778 55443', 4.7, 'Guntur', 'Chennai'),
+('Secure Movers', 4600, '+91 55667 44332', 4.3, 'Guntur', 'Chennai'),
+
+('Andhra Packers', 4700, '+91 99887 66554', 4.5, 'Nellore', 'Chennai'),
+('Express Movers', 4900, '+91 88998 77665', 4.6, 'Nellore', 'Chennai'),
+('Reliable Packers', 4800, '+91 77987 66554', 4.4, 'Nellore', 'Chennai'),
+('Swift Packers', 5000, '+91 66778 55443', 4.7, 'Nellore', 'Chennai'),
+('Secure Movers', 5100, '+91 55667 44332', 4.3, 'Nellore', 'Chennai'),
+
+-- From Andhra Pradesh to Bangalore
+('Andhra Packers', 5000, '+91 99887 66554', 4.5, 'Vijayawada', 'Bangalore'),
+('Express Movers', 5200, '+91 88998 77665', 4.6, 'Vijayawada', 'Bangalore'),
+('Reliable Packers', 5100, '+91 77987 66554', 4.4, 'Vijayawada', 'Bangalore'),
+('Swift Packers', 5300, '+91 66778 55443', 4.7, 'Vijayawada', 'Bangalore'),
+('Secure Movers', 5400, '+91 55667 44332', 4.3, 'Vijayawada', 'Bangalore'),
+
+('Andhra Packers', 5500, '+91 99887 66554', 4.5, 'Visakhapatnam', 'Bangalore'),
+('Express Movers', 5700, '+91 88998 77665', 4.6, 'Visakhapatnam', 'Bangalore'),
+('Reliable Packers', 5600, '+91 77987 66554', 4.4, 'Visakhapatnam', 'Bangalore'),
+('Swift Packers', 5800, '+91 66778 55443', 4.7, 'Visakhapatnam', 'Bangalore'),
+('Secure Movers', 5900, '+91 55667 44332', 4.3, 'Visakhapatnam', 'Bangalore'),
+
+('Andhra Packers', 5200, '+91 99887 66554', 4.5, 'Tirupati', 'Bangalore'),
+('Express Movers', 5400, '+91 88998 77665', 4.6, 'Tirupati', 'Bangalore'),
+('Reliable Packers', 5300, '+91 77987 66554', 4.4, 'Tirupati', 'Bangalore'),
+('Swift Packers', 5500, '+91 66778 55443', 4.7, 'Tirupati', 'Bangalore'),
+('Secure Movers', 5600, '+91 55667 44332', 4.3, 'Tirupati', 'Bangalore'),
+
+('Andhra Packers', 4700, '+91 99887 66554', 4.5, 'Guntur', 'Bangalore'),
+('Express Movers', 4900, '+91 88998 77665', 4.6, 'Guntur', 'Bangalore'),
+('Reliable Packers', 4800, '+91 77987 66554', 4.4, 'Guntur', 'Bangalore'),
+('Swift Packers', 5000, '+91 66778 55443', 4.7, 'Guntur', 'Bangalore'),
+('Secure Movers', 5100, '+91 55667 44332', 4.3, 'Guntur', 'Bangalore'),
+
+('Andhra Packers', 5200, '+91 99887 66554', 4.5, 'Nellore', 'Bangalore'),
+('Express Movers', 5400, '+91 88998 77665', 4.6, 'Nellore', 'Bangalore'),
+('Reliable Packers', 5300, '+91 77987 66554', 4.4, 'Nellore', 'Bangalore'),
+('Swift Packers', 5500, '+91 66778 55443', 4.7, 'Nellore', 'Bangalore'),
+('Secure Movers', 5600, '+91 55667 44332', 4.3, 'Nellore', 'Bangalore'),
+
+-- From Andhra Pradesh to Mumbai
+('Andhra Packers', 6000, '+91 99887 66554', 4.5, 'Vijayawada', 'Mumbai'),
+('Express Movers', 6200, '+91 88998 77665', 4.6, 'Vijayawada', 'Mumbai'),
+('Reliable Packers', 6100, '+91 77987 66554', 4.4, 'Vijayawada', 'Mumbai'),
+('Swift Packers', 6300, '+91 66778 55443', 4.7, 'Vijayawada', 'Mumbai'),
+('Secure Movers', 6400, '+91 55667 44332', 4.3, 'Vijayawada', 'Mumbai'),
+
+('Andhra Packers', 6500, '+91 99887 66554', 4.5, 'Visakhapatnam', 'Mumbai'),
+('Express Movers', 6700, '+91 88998 77665', 4.6, 'Visakhapatnam', 'Mumbai'),
+('Reliable Packers', 6600, '+91 77987 66554', 4.4, 'Visakhapatnam', 'Mumbai'),
+('Swift Packers', 6800, '+91 66778 55443', 4.7, 'Visakhapatnam', 'Mumbai'),
+('Secure Movers', 6900, '+91 55667 44332', 4.3, 'Visakhapatnam', 'Mumbai'),
+
+('Andhra Packers', 6200, '+91 99887 66554', 4.5, 'Tirupati', 'Mumbai'),
+('Express Movers', 6400, '+91 88998 77665', 4.6, 'Tirupati', 'Mumbai'),
+('Reliable Packers', 6300, '+91 77987 66554', 4.4, 'Tirupati', 'Mumbai'),
+('Swift Packers', 6500, '+91 66778 55443', 4.7, 'Tirupati', 'Mumbai'),
+('Secure Movers', 6600, '+91 55667 44332', 4.3, 'Tirupati', 'Mumbai'),
+
+('Andhra Packers', 5700, '+91 99887 66554', 4.5, 'Guntur', 'Mumbai'),
+('Express Movers', 5900, '+91 88998 77665', 4.6, 'Guntur', 'Mumbai'),
+('Reliable Packers', 5800, '+91 77987 66554', 4.4, 'Guntur', 'Mumbai'),
+('Swift Packers', 6000, '+91 66778 55443', 4.7, 'Guntur', 'Mumbai'),
+('Secure Movers', 6100, '+91 55667 44332', 4.3, 'Guntur', 'Mumbai'),
+
+('Andhra Packers', 6200, '+91 99887 66554', 4.5, 'Nellore', 'Mumbai'),
+('Express Movers', 6400, '+91 88998 77665', 4.6, 'Nellore', 'Mumbai'),
+('Reliable Packers', 6300, '+91 77987 66554', 4.4, 'Nellore', 'Mumbai'),
+('Swift Packers', 6500, '+91 66778 55443', 4.7, 'Nellore', 'Mumbai'),
+('Secure Movers', 6600, '+91 55667 44332', 4.3, 'Nellore', 'Mumbai'),
+
+-- From Andhra Pradesh to Delhi
+('Andhra Packers', 7000, '+91 99887 66554', 4.5, 'Vijayawada', 'Delhi'),
+('Express Movers', 7200, '+91 88998 77665', 4.6, 'Vijayawada', 'Delhi'),
+('Reliable Packers', 7100, '+91 77987 66554', 4.4, 'Vijayawada', 'Delhi'),
+('Swift Packers', 7300, '+91 66778 55443', 4.7, 'Vijayawada', 'Delhi'),
+('Secure Movers', 7400, '+91 55667 44332', 4.3, 'Vijayawada', 'Delhi'),
+
+('Andhra Packers', 7500, '+91 99887 66554', 4.5, 'Visakhapatnam', 'Delhi'),
+('Express Movers', 7700, '+91 88998 77665', 4.6, 'Visakhapatnam', 'Delhi'),
+('Reliable Packers', 7600, '+91 77987 66554', 4.4, 'Visakhapatnam', 'Delhi'),
+('Swift Packers', 7800, '+91 66778 55443', 4.7, 'Visakhapatnam', 'Delhi'),
+('Secure Movers', 7900, '+91 55667 44332', 4.3, 'Visakhapatnam', 'Delhi'),
+
+('Andhra Packers', 7200, '+91 99887 66554', 4.5, 'Tirupati', 'Delhi'),
+('Express Movers', 7400, '+91 88998 77665', 4.6, 'Tirupati', 'Delhi'),
+('Reliable Packers', 7300, '+91 77987 66554', 4.4, 'Tirupati', 'Delhi'),
+('Swift Packers', 7500, '+91 66778 55443', 4.7, 'Tirupati', 'Delhi'),
+('Secure Movers', 7600, '+91 55667 44332', 4.3, 'Tirupati', 'Delhi'),
+
+('Andhra Packers', 6700, '+91 99887 66554', 4.5, 'Guntur', 'Delhi'),
+('Express Movers', 6900, '+91 88998 77665', 4.6, 'Guntur', 'Delhi'),
+('Reliable Packers', 6800, '+91 77987 66554', 4.4, 'Guntur', 'Delhi'),
+('Swift Packers', 7000, '+91 66778 55443', 4.7, 'Guntur', 'Delhi'),
+('Secure Movers', 7100, '+91 55667 44332', 4.3, 'Guntur', 'Delhi'),
+
+('Andhra Packers', 7200, '+91 99887 66554', 4.5, 'Nellore', 'Delhi'),
+('Express Movers', 7400, '+91 88998 77665', 4.6, 'Nellore', 'Delhi'),
+('Reliable Packers', 7300, '+91 77987 66554', 4.4, 'Nellore', 'Delhi'),
+('Swift Packers', 7500, '+91 66778 55443', 4.7, 'Nellore', 'Delhi'),
+('Secure Movers', 7600, '+91 55667 44332', 4.3, 'Nellore', 'Delhi');
+INSERT INTO companies (company_name, cost_per_km, phone_number, rating, from_location, to_location)
+VALUES 
+('Andhra Packers', 1000, '+91 99887 66554', 4.5, 'Vijayawada', 'Vijayawada'),
+('Express Movers', 1200, '+91 88998 77665', 4.6, 'Vijayawada', 'Vijayawada'),
+('Reliable Packers', 1100, '+91 77987 66554', 4.4, 'Vijayawada', 'Vijayawada'),
+('Swift Packers', 1300, '+91 66778 55443', 4.7, 'Vijayawada', 'Vijayawada'),
+('Secure Movers', 1400, '+91 55667 44332', 4.3, 'Vijayawada', 'Vijayawada'),
+
+('Andhra Packers', 1500, '+91 99887 66554', 4.5, 'Visakhapatnam', 'Visakhapatnam'),
+('Express Movers', 1700, '+91 88998 77665', 4.6, 'Visakhapatnam', 'Visakhapatnam'),
+('Reliable Packers', 1600, '+91 77987 66554', 4.4, 'Visakhapatnam', 'Visakhapatnam'),
+('Swift Packers', 1800, '+91 66778 55443', 4.7, 'Visakhapatnam', 'Visakhapatnam'),
+('Secure Movers', 1900, '+91 55667 44332', 4.3, 'Visakhapatnam', 'Visakhapatnam'),
+
+('Andhra Packers', 1200, '+91 99887 66554', 4.5, 'Tirupati', 'Tirupati'),
+('Express Movers', 1400, '+91 88998 77665', 4.6, 'Tirupati', 'Tirupati'),
+('Reliable Packers', 1300, '+91 77987 66554', 4.4, 'Tirupati', 'Tirupati'),
+('Swift Packers', 1500, '+91 66778 55443', 4.7, 'Tirupati', 'Tirupati'),
+('Secure Movers', 1600, '+91 55667 44332', 4.3, 'Tirupati', 'Tirupati'),
+
+('Andhra Packers', 900, '+91 99887 66554', 4.5, 'Guntur', 'Guntur'),
+('Express Movers', 1100, '+91 88998 77665', 4.6, 'Guntur', 'Guntur'),
+('Reliable Packers', 1000, '+91 77987 66554', 4.4, 'Guntur', 'Guntur'),
+('Swift Packers', 1200, '+91 66778 55443', 4.7, 'Guntur', 'Guntur'),
+('Secure Movers', 1300, '+91 55667 44332', 4.3, 'Guntur', 'Guntur'),
+
+('Andhra Packers', 1100, '+91 99887 66554', 4.5, 'Nellore', 'Nellore'),
+('Express Movers', 1300, '+91 88998 77665', 4.6, 'Nellore', 'Nellore'),
+('Reliable Packers', 1200, '+91 77987 66554', 4.4, 'Nellore', 'Nellore'),
+('Swift Packers', 1400, '+91 66778 55443', 4.7, 'Nellore', 'Nellore'),
+('Secure Movers', 1500, '+91 55667 44332', 4.3, 'Nellore', 'Nellore');
+DESC booking_history;
+select * from userdata;
+use pack;
+-- Delhi to Andhra Pradesh Cities
+-- Delhi to Andhra Pradesh Cities
+INSERT INTO companies (company_name, cost_per_km, phone_number, rating, from_location, to_location)
+VALUES 
+('Packers Express', 8500, '+91 98765 43210', 4.5, 'Delhi', 'Vijayawada'),
+('Trans Packers', 8700, '+91 87654 32109', 4.6, 'Delhi', 'Vijayawada'),
+('Safe Express', 8900, '+91 76543 21098', 4.7, 'Delhi', 'Vijayawada'),
+('Gati Movers', 8600, '+91 65432 10987', 4.4, 'Delhi', 'Vijayawada'),
+('Agarwal Packers and Movers', 8800, '+91 54321 09876', 4.6, 'Delhi', 'Vijayawada'),
+
+('Packers Express', 9000, '+91 98765 43210', 4.5, 'Delhi', 'Visakhapatnam'),
+('Trans Packers', 9200, '+91 87654 32109', 4.6, 'Delhi', 'Visakhapatnam'),
+('Safe Express', 9400, '+91 76543 21098', 4.7, 'Delhi', 'Visakhapatnam'),
+('Gati Movers', 9100, '+91 65432 10987', 4.4, 'Delhi', 'Visakhapatnam'),
+('Agarwal Packers and Movers', 9300, '+91 54321 09876', 4.6, 'Delhi', 'Visakhapatnam'),
+
+('Packers Express', 8700, '+91 98765 43210', 4.5, 'Delhi', 'Tirupati'),
+('Trans Packers', 8900, '+91 87654 32109', 4.6, 'Delhi', 'Tirupati'),
+('Safe Express', 9100, '+91 76543 21098', 4.7, 'Delhi', 'Tirupati'),
+('Gati Movers', 8800, '+91 65432 10987', 4.4, 'Delhi', 'Tirupati'),
+('Agarwal Packers and Movers', 9000, '+91 54321 09876', 4.6, 'Delhi', 'Tirupati'),
+
+('Packers Express', 8600, '+91 98765 43210', 4.5, 'Delhi', 'Guntur'),
+('Trans Packers', 8800, '+91 87654 32109', 4.6, 'Delhi', 'Guntur'),
+('Safe Express', 9000, '+91 76543 21098', 4.7, 'Delhi', 'Guntur'),
+('Gati Movers', 8700, '+91 65432 10987', 4.4, 'Delhi', 'Guntur'),
+('Agarwal Packers and Movers', 8900, '+91 54321 09876', 4.6, 'Delhi', 'Guntur'),
+
+('Packers Express', 8500, '+91 98765 43210', 4.5, 'Delhi', 'Nellore'),
+('Trans Packers', 8700, '+91 87654 32109', 4.6, 'Delhi', 'Nellore'),
+('Safe Express', 8900, '+91 76543 21098', 4.7, 'Delhi', 'Nellore'),
+('Gati Movers', 8600, '+91 65432 10987', 4.4, 'Delhi', 'Nellore'),
+('Agarwal Packers and Movers', 8800, '+91 54321 09876', 4.6, 'Delhi', 'Nellore');
+
+-- Mumbai to Andhra Pradesh Cities
+INSERT INTO companies (company_name, cost_per_km, phone_number, rating, from_location, to_location)
+VALUES 
+('Packers Delight', 8600, '+91 98765 43210', 4.5, 'Mumbai', 'Vijayawada'),
+('Trans Packers', 8800, '+91 87654 32109', 4.6, 'Mumbai', 'Vijayawada'),
+('Express Movers', 9000, '+91 76543 21098', 4.7, 'Mumbai', 'Vijayawada'),
+('Reliable Packers', 8700, '+91 65432 10987', 4.4, 'Mumbai', 'Vijayawada'),
+('Urban Move', 8900, '+91 54321 09876', 4.6, 'Mumbai', 'Vijayawada'),
+
+('Packers Delight', 8800, '+91 98765 43210', 4.5, 'Mumbai', 'Visakhapatnam'),
+('Trans Packers', 9000, '+91 87654 32109', 4.6, 'Mumbai', 'Visakhapatnam'),
+('Express Movers', 9200, '+91 76543 21098', 4.7, 'Mumbai', 'Visakhapatnam'),
+('Reliable Packers', 8900, '+91 65432 10987', 4.4, 'Mumbai', 'Visakhapatnam'),
+('Urban Move', 9100, '+91 54321 09876', 4.6, 'Mumbai', 'Visakhapatnam'),
+
+('Packers Delight', 8700, '+91 98765 43210', 4.5, 'Mumbai', 'Tirupati'),
+('Trans Packers', 8900, '+91 87654 32109', 4.6, 'Mumbai', 'Tirupati'),
+('Express Movers', 9100, '+91 76543 21098', 4.7, 'Mumbai', 'Tirupati'),
+('Reliable Packers', 8800, '+91 65432 10987', 4.4, 'Mumbai', 'Tirupati'),
+('Urban Move', 9000, '+91 54321 09876', 4.6, 'Mumbai', 'Tirupati'),
+
+('Packers Delight', 8600, '+91 98765 43210', 4.5, 'Mumbai', 'Guntur'),
+('Trans Packers', 8800, '+91 87654 32109', 4.6, 'Mumbai', 'Guntur'),
+('Express Movers', 9000, '+91 76543 21098', 4.7, 'Mumbai', 'Guntur'),
+('Reliable Packers', 8700, '+91 65432 10987', 4.4, 'Mumbai', 'Guntur'),
+('Urban Move', 8900, '+91 54321 09876', 4.6, 'Mumbai', 'Guntur'),
+
+('Packers Delight', 8500, '+91 98765 43210', 4.5, 'Mumbai', 'Nellore'),
+('Trans Packers', 8700, '+91 87654 32109', 4.6, 'Mumbai', 'Nellore'),
+('Express Movers', 8900, '+91 76543 21098', 4.7, 'Mumbai', 'Nellore'),
+('Reliable Packers', 8600, '+91 65432 10987', 4.4, 'Mumbai', 'Nellore'),
+('Urban Move', 8800, '+91 54321 09876', 4.6, 'Mumbai', 'Nellore');
+
+-- Chennai to Andhra Pradesh Cities
+INSERT INTO companies (company_name, cost_per_km, phone_number, rating, from_location, to_location)
+VALUES 
+('Elite Packers', 8700, '+91 98765 43210', 4.5, 'Chennai', 'Vijayawada'),
+('Packers Hub', 8900, '+91 87654 32109', 4.6, 'Chennai', 'Vijayawada'),
+('Fast Relocations', 9100, '+91 76543 21098', 4.7, 'Chennai', 'Vijayawada'),
+('Metro Packers', 8800, '+91 65432 10987', 4.4, 'Chennai', 'Vijayawada'),
+('Secure Packers', 9000, '+91 54321 09876', 4.6, 'Chennai', 'Vijayawada'),
+
+('Elite Packers', 8900, '+91 98765 43210', 4.5, 'Chennai', 'Visakhapatnam'),
+('Packers Hub', 9100, '+91 87654 32109', 4.6, 'Chennai', 'Visakhapatnam'),
+('Fast Relocations', 9300, '+91 76543 21098', 4.7, 'Chennai', 'Visakhapatnam'),
+('Metro Packers', 9000, '+91 65432 10987', 4.4, 'Chennai', 'Visakhapatnam'),
+('Secure Packers', 9200, '+91 54321 09876', 4.6, 'Chennai', 'Visakhapatnam'),
+
+('Elite Packers', 8800, '+91 98765 43210', 4.5, 'Chennai', 'Tirupati'),
+('Packers Hub', 9000, '+91 87654 32109', 4.6, 'Chennai', 'Tirupati'),
+('Fast Relocations', 9200, '+91 76543 21098', 4.7, 'Chennai', 'Tirupati'),
+('Metro Packers', 8900, '+91 65432 10987', 4.4, 'Chennai', 'Tirupati'),
+('Secure Packers', 9100, '+91 54321 09876', 4.6, 'Chennai', 'Tirupati'),
+
+('Elite Packers', 8700, '+91 98765 43210', 4.5, 'Chennai', 'Guntur'),
+('Packers Hub', 8900, '+91 87654 32109', 4.6, 'Chennai', 'Guntur'),
+('Fast Relocations', 9100, '+91 76543 21098', 4.7, 'Chennai', 'Guntur'),
+('Metro Packers', 8800, '+91 65432 10987', 4.4, 'Chennai', 'Guntur'),
+('Secure Packers', 9000, '+91 54321 09876', 4.6, 'Chennai', 'Guntur'),
+
+('Elite Packers', 8600, '+91 98765 43210', 4.5, 'Chennai', 'Nellore'),
+('Packers Hub', 8800, '+91 87654 32109', 4.6, 'Chennai', 'Nellore'),
+('Fast Relocations', 9000, '+91 76543 21098', 4.7, 'Chennai', 'Nellore'),
+('Metro Packers', 8700, '+91 65432 10987', 4.4, 'Chennai', 'Nellore'),
+('Secure Packers', 8900, '+91 54321 09876', 4.6, 'Chennai', 'Nellore');
+
+-- Bangalore to Andhra Pradesh Cities
+INSERT INTO companies (company_name, cost_per_km, phone_number, rating, from_location, to_location)
+VALUES 
+('Move Masters', 8500, '+91 98765 43210', 4.5, 'Bangalore', 'Vijayawada'),
+('Quick Packers', 8700, '+91 87654 32109', 4.6, 'Bangalore', 'Vijayawada'),
+('Top Movers', 8900, '+91 76543 21098', 4.7, 'Bangalore', 'Vijayawada'),
+('Sure Movers', 8600, '+91 65432 10987', 4.4, 'Bangalore', 'Vijayawada'),
+('Horizon Packers', 8800, '+91 54321 09876', 4.6, 'Bangalore', 'Vijayawada'),
+
+('Move Masters', 8700, '+91 98765 43210', 4.5, 'Bangalore', 'Visakhapatnam'),
+('Quick Packers', 8900, '+91 87654 32109', 4.6, 'Bangalore', 'Visakhapatnam'),
+('Top Movers', 9100, '+91 76543 21098', 4.7, 'Bangalore', 'Visakhapatnam'),
+('Sure Movers', 8800, '+91 65432 10987', 4.4, 'Bangalore', 'Visakhapatnam'),
+('Horizon Packers', 9000, '+91 54321 09876', 4.6, 'Bangalore', 'Visakhapatnam'),
+
+('Move Masters', 8600, '+91 98765 43210', 4.5, 'Bangalore', 'Tirupati'),
+('Quick Packers', 8800, '+91 87654 32109', 4.6, 'Bangalore', 'Tirupati'),
+('Top Movers', 9000, '+91 76543 21098', 4.7, 'Bangalore', 'Tirupati'),
+('Sure Movers', 8700, '+91 65432 10987', 4.4, 'Bangalore', 'Tirupati'),
+('Horizon Packers', 8900, '+91 54321 09876', 4.6, 'Bangalore', 'Tirupati'),
+
+('Move Masters', 8500, '+91 98765 43210', 4.5, 'Bangalore', 'Guntur'),
+('Quick Packers', 8700, '+91 87654 32109', 4.6, 'Bangalore', 'Guntur'),
+('Top Movers', 8900, '+91 76543 21098', 4.7, 'Bangalore', 'Guntur'),
+('Sure Movers', 8600, '+91 65432 10987', 4.4, 'Bangalore', 'Guntur'),
+('Horizon Packers', 8800, '+91 54321 09876', 4.6, 'Bangalore', 'Guntur'),
+
+('Move Masters', 8400, '+91 98765 43210', 4.5, 'Bangalore', 'Nellore'),
+('Quick Packers', 8600, '+91 87654 32109', 4.6, 'Bangalore', 'Nellore'),
+('Top Movers', 8800, '+91 76543 21098', 4.7, 'Bangalore', 'Nellore'),
+('Sure Movers', 8500, '+91 65432 10987', 4.4, 'Bangalore', 'Nellore'),
+('Horizon Packers', 8700, '+91 54321 09876', 4.6, 'Bangalore', 'Nellore');
+
+-- Hyderabad to Andhra Pradesh Cities
+INSERT INTO companies (company_name, cost_per_km, phone_number, rating, from_location, to_location)
+VALUES 
+('Metro Movers', 8600, '+91 98765 43210', 4.5, 'Hyderabad', 'Vijayawada'),
+('Packers Direct', 8800, '+91 87654 32109', 4.6, 'Hyderabad', 'Vijayawada'),
+('City Packers', 9000, '+91 76543 21098', 4.7, 'Hyderabad', 'Vijayawada'),
+('Urban Express', 8700, '+91 65432 10987', 4.4, 'Hyderabad', 'Vijayawada'),
+('Swift Packers', 8900, '+91 54321 09876', 4.6, 'Hyderabad', 'Vijayawada'),
+
+('Metro Movers', 8800, '+91 98765 43210', 4.5, 'Hyderabad', 'Visakhapatnam'),
+('Packers Direct', 9000, '+91 87654 32109', 4.6, 'Hyderabad', 'Visakhapatnam'),
+('City Packers', 9200, '+91 76543 21098', 4.7, 'Hyderabad', 'Visakhapatnam'),
+('Urban Express', 8900, '+91 65432 10987', 4.4, 'Hyderabad', 'Visakhapatnam'),
+('Swift Packers', 9100, '+91 54321 09876', 4.6, 'Hyderabad', 'Visakhapatnam'),
+
+('Metro Movers', 8700, '+91 98765 43210', 4.5, 'Hyderabad', 'Tirupati'),
+('Packers Direct', 8900, '+91 87654 32109', 4.6, 'Hyderabad', 'Tirupati'),
+('City Packers', 9100, '+91 76543 21098', 4.7, 'Hyderabad', 'Tirupati'),
+('Urban Express', 8800, '+91 65432 10987', 4.4, 'Hyderabad', 'Tirupati'),
+('Swift Packers', 9000, '+91 54321 09876', 4.6, 'Hyderabad', 'Tirupati'),
+
+('Metro Movers', 8600, '+91 98765 43210', 4.5, 'Hyderabad', 'Guntur'),
+('Packers Direct', 8800, '+91 87654 32109', 4.6, 'Hyderabad', 'Guntur'),
+('City Packers', 9000, '+91 76543 21098', 4.7, 'Hyderabad', 'Guntur'),
+('Urban Express', 8700, '+91 65432 10987', 4.4, 'Hyderabad', 'Guntur'),
+('Swift Packers', 8900, '+91 54321 09876', 4.6, 'Hyderabad', 'Guntur'),
+
+('Metro Movers', 8500, '+91 98765 43210', 4.5, 'Hyderabad', 'Nellore'),
+('Packers Direct', 8700, '+91 87654 32109', 4.6, 'Hyderabad', 'Nellore'),
+('City Packers', 8900, '+91 76543 21098', 4.7, 'Hyderabad', 'Nellore'),
+('Urban Express', 8600, '+91 65432 10987', 4.4, 'Hyderabad', 'Nellore'),
+('Swift Packers', 8800, '+91 54321 09876', 4.6, 'Hyderabad', 'Nellore');
+
